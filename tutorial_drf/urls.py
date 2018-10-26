@@ -1,15 +1,17 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from quickstart import views
+from rest_framework.routers import DefaultRouter
 
-router = routers.DefaultRouter()
-router.register('user', views.UserViewSet)
-router.register('group', views.GroupViewSet)
+from snippets.views import PostViewSet,TagViewSet, UserViewSet
+
+router = DefaultRouter()
+router.register('posts', PostViewSet)
+router.register('tags', TagViewSet)
+router.register('users', UserViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
